@@ -103,8 +103,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Exceptions\ClefNotFoundException.cs" />
+    <Compile Include="Builders\PsamViewBuilder.cs" />
+    <Compile Include="Managers\MidiManager.cs" />
     <Compile Include="Managers\MidiToLilyHelper.cs" />
     <Compile Include="Managers\MusicLoader.cs" />
+    <Compile Include="Managers\View\MidiPlayerViewManager.cs" />
+    <Compile Include="Managers\View\PsamViewManager.cs" />
     <Compile Include="Models\LilypondToken.cs" />
     <Compile Include="Models\LilypondTokenKind.cs" />
     <Compile Include="ViewModels\MidiPlayerViewModel.cs" />
@@ -224,6 +229,12 @@
     <Content Include="Files\Eenvoudige voorbeeldfiles\Punten.ly" />
     <Content Include="Files\Eenvoudige voorbeeldfiles\Rusten.ly" />
     <Content Include="Files\Eenvoudige voorbeeldfiles\Standaard_noten.ly" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Notes\Common.csproj">
+      <Project>{0db6f715-4bb9-4b69-9c30-0230654d7115}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
