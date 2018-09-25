@@ -3,6 +3,10 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using Sanford.Multimedia.Midi;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Common.Interfaces;
+using DPA_Musicsheets.Managers.View;
 
 namespace DPA_Musicsheets.ViewModels
 {
@@ -30,8 +34,11 @@ namespace DPA_Musicsheets.ViewModels
             }
         }
 
-        public MidiPlayerViewModel(MusicLoader musicLoader)
+        public MidiPlayerViewModel(IViewManagerPool pool)
         {
+            var viewManager = pool.GetInstance<MidiPlayerViewManager>();
+            viewManager.RegisterViewModel(this);
+
             // The OutputDevice is a midi device on the midi channel of your computer.
             // The audio will be streamed towards this output.
             // DeviceID 0 is your computer's audio channel.
@@ -48,7 +55,7 @@ namespace DPA_Musicsheets.ViewModels
             };
 
             // TODO: Can we use some sort of eventing system so the managers layer doesn't have to know the viewmodel layer?
-            musicLoader.MidiPlayerViewModel = this;
+            //            musicLoader.MidiPlayerViewModel = this;
         }
 
         private void UpdateButtons()

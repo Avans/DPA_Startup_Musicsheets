@@ -1,4 +1,7 @@
-﻿using DPA_Musicsheets.Managers;
+﻿using System.Collections.Generic;
+using Common.Interfaces;
+using DPA_Musicsheets.Managers;
+using DPA_Musicsheets.Managers.View;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
@@ -14,6 +17,7 @@ namespace DPA_Musicsheets.ViewModels
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
+            SimpleIoc.Default.Register<IViewManagerPool, ViewManagerPool>();
             SimpleIoc.Default.Register<MusicLoader>();
 
             SimpleIoc.Default.Register<MainViewModel>();

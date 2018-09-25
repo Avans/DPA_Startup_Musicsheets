@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Common.Interfaces;
+using DPA_Musicsheets.Builders;
+using DPA_Musicsheets.Managers.View;
 
 namespace DPA_Musicsheets.ViewModels
 {
@@ -20,14 +23,17 @@ namespace DPA_Musicsheets.ViewModels
         // These staffs will be bound to.
         public ObservableCollection<MusicalSymbol> Staffs { get; }
 
+        private readonly PsamViewManager _viewManager;
+
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="musicLoader">We need the musicloader so it can set our staffs.</param>
-        public StaffsViewModel(MusicLoader musicLoader)
+        public StaffsViewModel(IViewManagerPool pool)
         {
-            // TODO: Can we use some sort of eventing system so the managers layer doesn't have to know the viewmodel layer?
-            musicLoader.StaffsViewModel = this;
+            _viewManager = pool.GetInstance<PsamViewManager>();
+            _viewManager.RegisterViewModel(this);
+
             Staffs = new ObservableCollection<MusicalSymbol>();
         }
 

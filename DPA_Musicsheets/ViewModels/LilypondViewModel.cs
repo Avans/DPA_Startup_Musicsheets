@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Common.Interfaces;
+using DPA_Musicsheets.Managers.View;
 
 namespace DPA_Musicsheets.ViewModels
 {
@@ -46,6 +48,21 @@ namespace DPA_Musicsheets.ViewModels
         private static int MILLISECONDS_BEFORE_CHANGE_HANDLED = 1500;
         private bool _waitingForRender = false;
 
+        public LilypondViewModel(IViewManagerPool pool)
+        {
+            var viewManager = pool.GetInstance<LilypondViewManager>();
+            viewManager.RegisterViewModel(this);
+
+            // TODO: Can we use some sort of eventing system so the managers layer doesn't have to know the viewmodel layer and viewmodels don't know each other?
+            // And viewmodels don't 
+            // _mainViewModel = mainViewModel;
+            // _musicLoader = musicLoader;
+            // _musicLoader.LilypondViewModel = this;
+
+            _text = "Your lilypond text will appear here.";
+        }
+
+        /*
         public LilypondViewModel(MainViewModel mainViewModel, MusicLoader musicLoader)
         {
             // TODO: Can we use some sort of eventing system so the managers layer doesn't have to know the viewmodel layer and viewmodels don't know each other?
@@ -56,6 +73,7 @@ namespace DPA_Musicsheets.ViewModels
             
             _text = "Your lilypond text will appear here.";
         }
+        */
 
         public void LilypondTextLoaded(string text)
         {
@@ -75,7 +93,7 @@ namespace DPA_Musicsheets.ViewModels
                 _waitingForRender = true;
                 _lastChange = DateTime.Now;
 
-                _mainViewModel.CurrentState = "Rendering...";
+                //_mainViewModel.CurrentState = "Rendering...";
 
                 Task.Delay(MILLISECONDS_BEFORE_CHANGE_HANDLED).ContinueWith((task) =>
                 {
@@ -85,7 +103,7 @@ namespace DPA_Musicsheets.ViewModels
                         UndoCommand.RaiseCanExecuteChanged();
 
                         _musicLoader.LoadLilypondIntoWpfStaffsAndMidi(LilypondText);
-                        _mainViewModel.CurrentState = "";
+                        //_mainViewModel.CurrentState = "";
                     }
                 }, TaskScheduler.FromCurrentSynchronizationContext()); // Request from main thread.
             }
