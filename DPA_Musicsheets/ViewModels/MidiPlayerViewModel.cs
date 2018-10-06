@@ -44,6 +44,7 @@ namespace DPA_Musicsheets.ViewModels
             _sequencer.PlayingCompleted += (playingSender, playingEvent) =>
             {
                 _sequencer.Stop();
+                _sequencer.Position = 0;
                 _running = false;
             };
 
